@@ -1,34 +1,30 @@
 extends layout
 
 block content
-  div(class="post-shop-window")
-    div(class="post-header") 
-      a(class="title", href="https://google.com") Some stub blog entry
-      br
-      span(class="grey") written 2018-05-12 by Adrian Kuper
-    hr
-    p 
-      | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      | tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-      | quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-      | consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-      | cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
-      | non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    div(class="post-footer")
-      div(class="tags") Tags: <span>javascript</span> <span>testing</span>
-  
-  div(class="post-shop-window")
-    div(class="post-header") 
-      a(class="title", href="https://google.com") Some other stub blog entry
-      br
-      span(class="grey") written 2018-05-12 by Adrian Kuper
-    hr
-    p 
-      | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      | tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-      | quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-      | consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-      | cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
-      | non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    div(class="post-footer")
-      div(class="tags") Tags: <span>javascript</span> <span>testing</span>
+
+  // go through every post-preview received from api
+  each item in data
+
+    div(class="post-shop-window")
+
+      // ----------------------------------------------------------------
+      // HEADER
+      // ----------------------------------------------------------------
+      div(class="post-header") 
+        a(class="title", href="#TODO") #{item.post.title}
+        br
+        span(class="grey") written #{item.post.publishedAt} by #{item.post.author.name}
+      hr
+
+      // ----------------------------------------------------------------
+      // PLUG
+      // ----------------------------------------------------------------
+      p #{item.post.plug}
+
+      // ----------------------------------------------------------------
+      // FOOTER
+      // ----------------------------------------------------------------
+      div(class="post-footer")
+        div(class="tags")
+          each tag in item.post.tags
+            <span>#{tag}</span> 

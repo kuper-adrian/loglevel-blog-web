@@ -41,7 +41,7 @@ a {
   padding: 5px;
 }
 
-@media only screen and (max-width: 650px) {
+@media screen and (max-width: 1000px) {
   .grid-container {
     grid-template-areas:
       'header'
@@ -60,6 +60,11 @@ a {
 }
 .main-menu li {
   padding: 5px;
+}
+
+.main-menu li a {
+  color: white;
+  text-decoration: none;
 }
 
 .main-menu li:hover {
