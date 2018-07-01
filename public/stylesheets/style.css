@@ -1,8 +1,106 @@
+/* General */
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: white;
+  background-color: black;
+  padding: 0px 50px;
+  font-family: 'Courier New', Courier, monospace
 }
 
 a {
   color: #00B7FF;
+}
+
+/* Grid setup */
+.gi-header { 
+  grid-area: header;
+}
+.gi-menu { 
+  grid-area: menu; 
+}
+.gi-main { 
+  grid-area: main; 
+}
+.gi-footer { 
+  grid-area: footer; 
+  text-align: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header header header header'
+    'menu main main main'
+    'footer footer footer footer';
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.grid-container > div {
+  padding: 5px;
+}
+
+@media only screen and (max-width: 650px) {
+  .grid-container {
+    grid-template-areas:
+      'header'
+      'menu'
+      'main'
+      'footer'
+  }
+}
+
+/* Navigation */
+.main-menu {
+  padding: 0;
+  margin: 0;
+  min-width: 200px;
+  list-style: none;
+}
+.main-menu li {
+  padding: 5px;
+}
+
+.main-menu li:hover {
+  background-color: dodgerblue;
+  cursor: pointer;
+}
+
+/* Blog posts */
+.post-shop-window {
+  padding-bottom: 25px;
+}
+
+.post-header > .title {
+  padding: 5px 0px;
+  font-size: 24px;
+  font-weight: bold;
+  color: dodgerblue;
+  text-decoration: none;
+}
+
+.post-header > .title:hover {
+  text-decoration: underline;
+}
+
+.post-footer > .tags > span {
+  font-size: 12px;
+  border: solid;
+  border-radius: 5px;
+  border-color: grey;
+  background-color: grey;
+}
+
+/* Utility classes */
+.green {
+  color: darkgreen;
+}
+
+.blue {
+  color: dodgerblue;
+}
+
+.grey {
+  color: slategrey;
 }

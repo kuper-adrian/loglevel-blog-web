@@ -4,4 +4,19 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    div(class='grid-container')
+      div(class='gi-header')
+        h1 <span class="green">adrian@dev:</span>~<span class="blue">$</span> dev-null-blog <span class="grey">-h</span>
+        p A blog about programming
+        hr
+
+      div(class='gi-menu')
+        ul(class="main-menu")
+          li Home
+          li test 2
+
+      div(class='gi-main')
+        block content
+
+      div(class='gi-footer')
+        a(href="#") - back to top -
