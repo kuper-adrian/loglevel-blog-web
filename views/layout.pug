@@ -2,7 +2,12 @@ doctype html
 html
   head
     title= title
+    base(href="http://localhost:3000/")
     link(rel='stylesheet', href='/stylesheets/style.css')
+
+    block links
+    block scripts
+
   body
     div(class='grid-container')
       div(class='gi-header')
@@ -13,7 +18,7 @@ html
       div(class='gi-menu')
         ul(class="main-menu")
           li
-            a(href="/") Home
+            a(href="") Home
           li
             a(href="/about") About
 

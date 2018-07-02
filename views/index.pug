@@ -11,7 +11,8 @@ block content
       // HEADER
       // ----------------------------------------------------------------
       div(class="post-header") 
-        a(class="title", href="#TODO") #{item.post.title}
+        - const postLink = 'post/' + item.post.id
+        a(class="title", href= postLink) #{item.post.title}
         br
         span(class="grey") written #{item.post.publishedAt} by #{item.post.author.name}
       hr

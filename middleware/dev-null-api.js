@@ -13,7 +13,7 @@ const API_HOST_NAME = 'localhost';
 function getApiOptions(subPath) {
   return {
     port: '9002',
-    path: '/v1/post',
+    path: `/v1${subPath}`,
     hostname: API_HOST_NAME,
     method: 'GET',
   };
@@ -51,10 +51,22 @@ class DevNullApiClient {
 
   post(options) {
     // TODO check and use options properties
-    return new Promise((resolve, reject) => {
-      const options = getApiOptions('post');
-      return apiRequest(options, resolve, reject);
-    });
+
+    if (options === undefined) {
+      return new Promise((resolve, reject) => {
+        const apiOptions = getApiOptions('/post');
+        return apiRequest(apiOptions, resolve, reject);
+      });
+    }
+
+    if (options.id !== undefined) {
+      return new Promise((resolve, reject) => {
+        const apiOptions = getApiOptions(`/post/${options.id}`);
+        return apiRequest(apiOptions, resolve, reject);
+      });
+    }
+
+    return Promise.reject(new Error("invalid arguments"));
   }
 }
 
