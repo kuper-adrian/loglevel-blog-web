@@ -3,11 +3,15 @@ const router = express.Router();
 const Base64 = require('js-base64').Base64;
 var asciidoctor = require('asciidoctor.js')(); // <1>
 
-const devNullApi = require('../middleware/dev-null-api');
+const devNullApi = require('../../middleware/dev-null-api');
 const apiClient = new devNullApi.Client();
 
+const createRouter = require('./create');
+
+router.use('/create', createRouter);
+
 /* GET page to view specific blog post. */
-router.get('/:id', function(req, res, next) {
+router.get('/:id', (req, res, next) => {
 
   apiClient.post({ id: req.params.id })
     .then((post) => {
@@ -22,7 +26,9 @@ router.get('/:id', function(req, res, next) {
       next(error);
     });  
 }, (req, res) => {
-  res.render('post', { title: req.devNullPost.title, data: req.devNullPost });
-});
+  res.render('post/index', { title: req.devNullPost.title, data: req.devNullPost });
+})
+
+
 
 module.exports = router;
