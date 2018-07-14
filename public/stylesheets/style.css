@@ -1,41 +1,45 @@
 /* General */
 body {
-  max-width: 1000px;
-  margin: 0 auto;
   color: white;
   background-color: black;
   padding: 0px 50px;
-  font-family: 'Courier New', Courier, monospace
+  font-family: "Courier New", Courier, monospace;
+
+  
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
 }
 
 /* Grid setup */
-.gi-header { 
+.gi-header {
   grid-area: header;
 }
-.gi-menu { 
-  grid-area: menu; 
+.gi-menu {
+  grid-area: menu;
 }
-.gi-main { 
-  grid-area: main; 
+.gi-main {
+  grid-area: main;
 }
-.gi-footer { 
-  grid-area: footer; 
+.gi-footer {
+  grid-area: footer;
   text-align: center;
 }
 
 .grid-container {
+  margin: 0 auto;
+  max-width: 1000px;
   display: grid;
   grid-template-areas:
-    'header'
-    'menu'
-    'main'
-    'footer';
+    "header"
+    "menu"
+    "main"
+    "footer";
   grid-gap: 10px;
   padding: 10px;
+
+  
 }
 
 .grid-container > div {
@@ -44,11 +48,12 @@ a {
 
 /* Navigation */
 .main-menu {
-  padding: 0;
+  padding: 10px;
   margin: 0;
+  background-color: #2c2c2c;
 }
 .main-menu span {
-  padding-right: 5px;
+  padding-right: 25px;
 }
 
 .main-menu span a {
@@ -84,6 +89,15 @@ a {
   border-radius: 5px;
   border-color: grey;
   background-color: grey;
+}
+
+/* Forms */
+.log-level-form input,
+.log-level-form textarea {
+  width: 100%;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
 }
 
 /* Utility classes */

@@ -14,6 +14,7 @@ block content
       <span class="grey">written #{data.publishedAt} by #{data.author.name}</span>
 
     hr
+    // TODO watch out for xss when using !{}, source and content must be trusted!
     div(class="post-body") !{data.text}
 
     div(class="post-footer")
