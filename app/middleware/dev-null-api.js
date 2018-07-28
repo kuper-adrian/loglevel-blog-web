@@ -1,73 +1,56 @@
 /**
- * Wrapper for dev-null-api.
+ * Wrapper for loglevel-blog-api.
  */
 
-const http = require('http');
+const request = require("request-promise-native");
 
-const API_HOST_NAME = 'localhost';
+const PORT = 9002;
+const API_HOST_NAME = 'http://localhost';
 
-/**
- * Creates HTTP request options for api call.
- * @param {string} subPath sub url path for api request
- */
-function getApiOptions(subPath) {
-  return {
-    port: '9002',
-    path: `/v1${subPath}`,
-    hostname: API_HOST_NAME,
-    method: 'GET',
-  };
+function getFullUri(subPath) {
+  return `${API_HOST_NAME}:${PORT}/v1${subPath}`;
 }
 
-/**
- * Makes api request.
- * @param {Object} options Request options object
- * @param {Function} resolve Callback that is called, when the api request succeeded
- * @param {Function} reject Callback that is called, when an error occures
- */
-function apiRequest(options, resolve, reject) {
-  http.get(options, (resp) => {
-    let data = '';
-
-    // a chunk of data has been recieved.
-    resp.on('data', (chunk) => {
-      data += chunk;
-    });
-
-    // the whole response has been received.
-    resp.on('end', () => {
-      const apiData = JSON.parse(data);
-      resolve(apiData);
-    });
-  }).on('error', (err) => {
-    reject(err);
-  });
-}
-
-class DevNullApiClient {
+class LogLevelBlogApiClient {
   constructor() {
-
   }
 
   post(options) {
-    // TODO check and use options properties
-
-    if (options === undefined) {
-      return new Promise((resolve, reject) => {
-        const apiOptions = getApiOptions('/post');
-        return apiRequest(apiOptions, resolve, reject);
+    if (!options) {
+      return request.get({
+        uri: getFullUri('/post'),
+        json: true,
       });
     }
 
-    if (options.id !== undefined) {
-      return new Promise((resolve, reject) => {
-        const apiOptions = getApiOptions(`/post/${options.id}`);
-        return apiRequest(apiOptions, resolve, reject);
+    if (options.id) {
+      return request.get({
+        uri: getFullUri(`/post/${options.id}`),
+        json: true,
       });
     }
 
     return Promise.reject(new Error("invalid arguments"));
   }
+
+  login(options) {
+    if (!options.username) {
+      return Promise.reject(new Error('no username'));
+    }
+    if (!options.password) {
+      return Promise.reject(new Errir('no password'));
+    }
+
+    return request.post({
+      method: 'POST',
+      uri: getFullUri('/login'),
+      body: {
+         username: options.username,
+         password: options.password,
+      },
+      json: true,
+    })
+  }
 }
 
-exports.Client = DevNullApiClient;
+exports.Client = LogLevelBlogApiClient;

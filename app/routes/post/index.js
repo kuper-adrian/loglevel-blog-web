@@ -12,7 +12,7 @@ router.use('/create', createRouter);
 
 /* GET page to view specific blog post. */
 router.get('/:id', (req, res, next) => {
-
+  
   apiClient.post({ id: req.params.id })
     .then((post) => {
       post.text = asciidoctor.convert(Base64.decode(post.text));

@@ -6,7 +6,7 @@ const apiClient = new devNullApi.Client();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
+  console.log('test');
   apiClient.post()
     .then((posts) => {
       req.devNullPosts = posts;
