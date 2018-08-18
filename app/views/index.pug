@@ -2,30 +2,42 @@ extends layout
 
 block content
 
-  // go through every post-preview received from api
-  each item in data
+  div(class="previews-container")
 
-    div(class="post-shop-window")
+    div(class="previews")
+      // go through every post-preview received from api
+      each item in data.previews
 
-      // ----------------------------------------------------------------
-      // HEADER
-      // ----------------------------------------------------------------
-      div(class="post-header") 
-        - const postLink = 'post/' + item.post.id
-        a(class="title", href= postLink) #{item.post.title}
-        br
-        span(class="grey") written #{item.post.publishedAt} by #{item.post.author.name}
-      hr
+        div(class="post-shop-window")
 
-      // ----------------------------------------------------------------
-      // PLUG
-      // ----------------------------------------------------------------
-      p #{item.post.plug}
+          // ----------------------------------------------------------------
+          // HEADER
+          // ----------------------------------------------------------------
+          div(class="post-header") 
+            a(class="title", href= item.actions.read.href) #{item.title}
 
-      // ----------------------------------------------------------------
-      // FOOTER
-      // ----------------------------------------------------------------
-      div(class="post-footer")
-        div(class="tags")
-          each tag in item.post.tags
-            <span>#{tag}</span> 
+            if item.actions.edit || item.actions.delete
+              button(class="post-header-actions-access") ...
+
+            br
+            span(class="grey") written #{item.publishedAt} by #{item.author.name}
+          hr
+
+          // ----------------------------------------------------------------
+          // PLUG
+          // ----------------------------------------------------------------
+          p #{item.plug}
+
+          // ----------------------------------------------------------------
+          // FOOTER
+          // ----------------------------------------------------------------
+          div(class="post-footer")
+            div(class="tags")
+              each tag in item.tags
+                <span>#{tag}</span> 
+    
+    div(class="preview-navigation")   
+      if data.actions.next
+        a(href= data.actions.next.href) next
+      if data.actions.previous
+        a(href= data.actions.previous.href) previous

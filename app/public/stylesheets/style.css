@@ -4,8 +4,6 @@ body {
   background-color: black;
   padding: 0px 50px;
   font-family: "Courier New", Courier, monospace;
-
-  
 }
 
 a {
@@ -38,12 +36,31 @@ a {
     "footer";
   grid-gap: 10px;
   padding: 10px;
-
-  
 }
 
 .grid-container > div {
   padding: 5px;
+}
+
+.previews-container {
+  display: grid;
+  width: 100%;
+  grid-template-areas: 
+    "previews"
+    "page-nav";
+}
+
+.previews {
+  grid-area: previews;
+}
+
+.preview-navigation {
+  grid-area: page-nav;
+}
+
+.preview-navigation a {
+  float: right;
+  margin: 0 10px;
 }
 
 /* Navigation */
@@ -89,6 +106,16 @@ a {
   border-radius: 5px;
   border-color: grey;
   background-color: grey;
+}
+
+.post-header-actions-access {
+  padding: 10px;
+  border-radius: 2px;
+  font-size: 5px;
+  float: right;
+  background: #2c2c2c;
+  border-color: dodgerblue;
+  color: white;
 }
 
 /* Forms */

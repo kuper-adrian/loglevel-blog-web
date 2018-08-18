@@ -1,8 +1,8 @@
 const express = require('express');
-const router = express.Router();
+const loglevelApi = require('../services/api');
 
-const loglevelBlogApi = require('../middleware/dev-null-api');
-const apiClient = new loglevelBlogApi.Client();
+const router = express.Router();
+const apiClient = new loglevelApi.Client();
 
 router
   .get('/', (req, res) => {
@@ -27,6 +27,8 @@ router
       password: req.body.password,
     })
       .then((tokens) => {
+        // TODO verify access token!
+
         res.cookie('accessToken', tokens.accessToken, {
           httpOnly: true,
         });

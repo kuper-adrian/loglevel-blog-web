@@ -1,24 +1,33 @@
 const express = require('express');
-const router = express.Router();
+const loglevelApi = require('../services/api');
 
-const devNullApi = require('../middleware/dev-null-api');
-const apiClient = new devNullApi.Client();
+const router = express.Router();
+const apiClient = new loglevelApi.Client();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  console.log('test');
-  apiClient.post()
-    .then((posts) => {
-      req.devNullPosts = posts;
-      next();
+router
+  .get('/', (req, res, next) => {
+    const page = !req.query.page ? 0 : Number(req.query.page);
+    console.log('test');
+    apiClient.post({
+      cookies: req.cookies,
+      page,
     })
-    .catch((error) => {
-      // TODO proper error handling
-      console.log(error);
-      next(error);
-    });
-}, (req, res) => {
-  res.render('index', { title: 'dev-null-blog', data: req.devNullPosts });
-});
+      .then((posts) => {
+        req.devNullPosts = posts;
+        next();
+      })
+      .catch((error) => {
+        // TODO proper error handling
+        console.log(error);
+        next(error);
+      });
+  }, (req, res) => {
+    res.render('index', { title: 'dev-null-blog', data: req.devNullPosts });
+  })
+
+  .post((req, res) => {
+    res.send('test');
+  });
 
 module.exports = router;
