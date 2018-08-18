@@ -17,9 +17,17 @@ class LogLevelBlogApiClient {
 
   post(options) {
     if (!options) {
+      return Promise.reject(new Error('invalid parameters'));
+    }
+      
+
+    if (options.page !== undefined && options.page !== null) {
       return request.get({
-        uri: getFullUri('/post'),
+        uri: getFullUri(`/post?page=${options.page}`),
         json: true,
+        headers: {
+          Authorization: `Bearer ${options.cookies.accessToken}`
+        }
       });
     }
 
@@ -38,7 +46,7 @@ class LogLevelBlogApiClient {
       return Promise.reject(new Error('no username'));
     }
     if (!options.password) {
-      return Promise.reject(new Errir('no password'));
+      return Promise.reject(new Error('no password'));
     }
 
     return request.post({
