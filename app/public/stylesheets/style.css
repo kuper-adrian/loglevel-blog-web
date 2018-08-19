@@ -108,14 +108,8 @@ a {
   background-color: grey;
 }
 
-.post-header-actions-access {
-  padding: 10px;
-  border-radius: 2px;
-  font-size: 5px;
+.post-header > .actions-access {
   float: right;
-  background: #2c2c2c;
-  border-color: dodgerblue;
-  color: white;
 }
 
 /* Forms */
