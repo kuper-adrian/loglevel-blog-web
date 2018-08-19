@@ -2,17 +2,14 @@ const express = require('express');
 const loglevelApi = require('../services/api');
 
 const router = express.Router();
-const apiClient = new loglevelApi.Client();
+const ApiClient = loglevelApi.Client;
 
 /* GET home page. */
 router
   .get('/', (req, res, next) => {
     const page = !req.query.page ? 0 : Number(req.query.page);
     console.log('test');
-    apiClient.post({
-      cookies: req.cookies,
-      page,
-    })
+    ApiClient.getPostsByPage(page, req.cookies)
       .then((posts) => {
         req.devNullPosts = posts;
         next();

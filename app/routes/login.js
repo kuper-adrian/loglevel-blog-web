@@ -2,14 +2,14 @@ const express = require('express');
 const loglevelApi = require('../services/api');
 
 const router = express.Router();
-const apiClient = new loglevelApi.Client();
+const ApiClient = loglevelApi.Client;
 
 router
   .get('/', (req, res) => {
     // TODO redirect if already logged in
     res.render('login', { title: 'login' });
   })
-  
+
   .post('/', (req, res) => {
     // check that required form data was passed
     if (!req.body.username) {
@@ -22,10 +22,7 @@ router
       return;
     }
 
-    apiClient.login({
-      username: req.body.username,
-      password: req.body.password,
-    })
+    ApiClient.login(req.body.username, req.body.password)
       .then((tokens) => {
         // TODO verify access token!
 

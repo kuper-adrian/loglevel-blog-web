@@ -2,7 +2,7 @@
  * Wrapper for loglevel-blog-api.
  */
 
-const request = require("request-promise-native");
+const request = require('request-promise-native');
 
 const PORT = 9002;
 const API_HOST_NAME = 'http://localhost';
@@ -12,40 +12,53 @@ function getFullUri(subPath) {
 }
 
 class LogLevelBlogApiClient {
-  constructor() {
+  /**
+   * Returns blog post by the given id from api.
+   * @param {Number} id Id of the request blog post
+   */
+  static getPostById(id, cookies = { accessToken: '', refreshToken: '' }) {
+    if (!id) {
+      return Promise.reject(new Error('Invalid "id" parameter passed'));
+    }
+
+    return request.get({
+      uri: getFullUri(`/post/${id}`),
+      json: true,
+      headers: {
+        Authorization: `Bearer ${cookies.accessToken}`,
+      },
+    });
   }
 
-  post(options) {
-    if (!options) {
-      return Promise.reject(new Error('invalid parameters'));
-    }
-      
-
-    if (options.page !== undefined && options.page !== null) {
-      return request.get({
-        uri: getFullUri(`/post?page=${options.page}`),
-        json: true,
-        headers: {
-          Authorization: `Bearer ${options.cookies.accessToken}`
-        }
-      });
+  /**
+   * Returns paginated blog post previews.
+   * @param {Number} page Zero-based page number
+   * @param {Object} cookies Object, that contains access and refresh tokens
+   */
+  static getPostsByPage(page, cookies = { accessToken: '', refreshToken: '' }) {
+    if (page === undefined || page === null || page < 0) {
+      return Promise.reject(new Error('Invalid "page" parameter passed'));
     }
 
-    if (options.id) {
-      return request.get({
-        uri: getFullUri(`/post/${options.id}`),
-        json: true,
-      });
-    }
-
-    return Promise.reject(new Error("invalid arguments"));
+    return request.get({
+      uri: getFullUri(`/post?page=${page}`),
+      json: true,
+      headers: {
+        Authorization: `Bearer ${cookies.accessToken}`,
+      },
+    });
   }
 
-  login(options) {
-    if (!options.username) {
+  /**
+   * Attempts login for user and returns tokens on success from api.
+   * @param {String} username Username of the user
+   * @param {String} password Password of the user
+   */
+  static login(username, password) {
+    if (!username) {
       return Promise.reject(new Error('no username'));
     }
-    if (!options.password) {
+    if (!password) {
       return Promise.reject(new Error('no password'));
     }
 
@@ -53,11 +66,11 @@ class LogLevelBlogApiClient {
       method: 'POST',
       uri: getFullUri('/login'),
       body: {
-         username: options.username,
-         password: options.password,
+        username,
+        password,
       },
       json: true,
-    })
+    });
   }
 }
 
