@@ -8,7 +8,9 @@ const PORT = 9002;
 const API_HOST_NAME = 'http://localhost';
 
 function getFullUri(subPath) {
-  return `${API_HOST_NAME}:${PORT}/v1${subPath}`;
+  const uri = `${API_HOST_NAME}:${PORT}/v1${subPath}`;
+  console.log(`requesting resource at '${uri}'`);
+  return uri;
 }
 
 class LogLevelBlogApiClient {
@@ -44,6 +46,16 @@ class LogLevelBlogApiClient {
       uri: getFullUri(`/post?page=${page}`),
       json: true,
       headers: {
+        Authorization: `Bearer ${cookies.accessToken}`,
+      },
+    });
+  }
+
+  static getTags(cookies = { accessToken: '', refreshToken: '' }) {
+    return request.get({
+      uri: getFullUri('/tag'),
+      json: true,
+      header: {
         Authorization: `Bearer ${cookies.accessToken}`,
       },
     });

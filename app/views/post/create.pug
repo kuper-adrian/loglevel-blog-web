@@ -1,12 +1,36 @@
 extends ../layout
 
+block links
+  link(rel="stylesheet", href="../../stylesheets/ll-blog-post-create.css")
+
+block scripts
+  script(src="../../js/ll-blog-post-create.js")
+
 block content
   div(class="log-level-form")
-    form(action="TODO", method="post")
+    form(action="/post/create", method="post", id="create-blog-post-form")
       h2 Title
-      input(type="text", name="")
+      input(type="text", name="title")
       h2 Plug
-      textarea(rows="5")
+      textarea(rows="5", name="plug")
       h2 Text
-      textarea(rows="30")
-      h2 Tags
+      textarea(rows="30", name="text")
+
+      div(id="tag-selection")
+
+        div(class="left-area")
+          h3 Available Tags
+          select(id="available-tags-select" name="available-tags", size="5")
+            for tag in data.tags
+              option(value= tag.id) #{tag.name}
+
+        div(class="center-area")
+          button(id="move-tag-right-btn", type="button") ->
+          button(id="move-tag-left-btn", type="button") <-
+        
+        div(class="right-area")
+          h3 Post Tags
+          select(id="post-tags-select" name="post-tags", size="5")
+      
+      hr
+      input(id="create-blog-post-btn", type="submit", value="Create blog post")

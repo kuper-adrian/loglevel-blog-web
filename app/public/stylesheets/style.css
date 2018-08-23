@@ -113,7 +113,7 @@ a {
 }
 
 /* Forms */
-.log-level-form input,
+.log-level-form input[type=text],
 .log-level-form textarea {
   width: 100%;
   background-color: black;
