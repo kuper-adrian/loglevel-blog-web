@@ -102,10 +102,11 @@ a {
 
 .post-footer > .tags > span {
   font-size: 12px;
+  padding: 2px 4px;
   border: solid;
   border-radius: 5px;
-  border-color: grey;
-  background-color: grey;
+  border-color: rgb(71, 69, 69);
+  background-color: rgb(71, 69, 69);
 }
 
 .post-header > .actions-access {
