@@ -1,7 +1,6 @@
 const express = require('express');
 const loglevelApi = require('../../services/api');
 const { Base64 } = require('js-base64');
-const asciidoctor = require('asciidoctor.js')();
 
 const router = express.Router();
 const Api = loglevelApi.Client;
@@ -24,7 +23,6 @@ router
   })
 
   .post('/', (req, res, next) => {
-    console.log(req.body);
     const { body } = req;
 
     if (
@@ -61,15 +59,15 @@ router
     blogPost.text = Base64.encode(blogPost.text);
 
     Api.createPost(blogPost, req.cookies)
-      .then(() => {
-
+      .then((result) => {
+        const { blogPostId } = result.data;
+        res.status(200).redirect(`/post/${blogPostId}`);
       })
 
       .catch((error) => {
-
+        console.log(error);
+        res.status(500).redirect('/');
       });
-
-    res.status(200).redirect('/');
   });
 
 module.exports = router;

@@ -35,8 +35,8 @@ $(document).ready(() => {
     $('#post-tags-select option').each((index, element) => {
       const current = $(element);
       tags.push({
-        value: current.val(),
-        text: current.text(),
+        id: Number(current.val()),
+        name: current.text(),
       });
     });
     const input = $('<input>')

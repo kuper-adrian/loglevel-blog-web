@@ -29,7 +29,8 @@ router.get('/:id', (req, res, next) => {
   Api.getPostById(req.params.id)
     .then((result) => {
       const { data: displayablePost } = result;
-      displayablePost.text = asciidoctor.convert(Base64.decode(result.text));
+      const asciidoc = Base64.decode(displayablePost.text);
+      displayablePost.text = asciidoctor.convert(asciidoc);
       req.devNullPost = displayablePost;
       next();
     })
