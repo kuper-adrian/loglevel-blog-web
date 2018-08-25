@@ -9,6 +9,10 @@ block scripts
 block content
   div(class="log-level-form")
     form(action="/post/create", method="post", id="create-blog-post-form")
+
+      if data.errorMessage
+        div(class="error-message") #{errorMessage}
+
       h2 Title
       input(type="text", name="title")
       h2 Plug

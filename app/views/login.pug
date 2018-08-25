@@ -4,7 +4,7 @@ block content
   form(action="login", method="post", id="login-form")
 
     if errorMessage
-      div(class="login-error-message") #{errorMessage}
+      div(class="error-message") #{errorMessage}
 
     label(for="username") Username:
     input(type="text", name="username")

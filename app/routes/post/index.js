@@ -14,8 +14,8 @@ router.use('/create', createRouter);
 router.get('/', (req, res, next) => {
   const page = !req.query.page ? 0 : Number(req.query.page);
   Api.getPostsByPage(page, req.cookies)
-    .then((posts) => {
-      res.render('index', { title: 'dev-null-blog', data: posts });
+    .then((result) => {
+      res.render('index', { title: 'dev-null-blog', data: result.data });
     })
     .catch((error) => {
       // TODO proper error handling
@@ -27,9 +27,10 @@ router.get('/', (req, res, next) => {
 /* GET page to view specific blog post. */
 router.get('/:id', (req, res, next) => {
   Api.getPostById(req.params.id)
-    .then((post) => {
-      post.text = asciidoctor.convert(Base64.decode(post.text));
-      req.devNullPost = post;
+    .then((result) => {
+      const { data: displayablePost } = result;
+      displayablePost.text = asciidoctor.convert(Base64.decode(result.text));
+      req.devNullPost = displayablePost;
       next();
     })
 

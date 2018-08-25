@@ -84,6 +84,17 @@ class LogLevelBlogApiClient {
       json: true,
     });
   }
+
+  static createPost(post, cookies = { accessToken: '', refreshToken: '' }) {
+    return request.post({
+      uri: getFullUri('/post'),
+      body: post,
+      json: true,
+      header: {
+        Authorization: `Bearer ${cookies.accessToken}`,
+      },
+    });
+  }
 }
 
 exports.Client = LogLevelBlogApiClient;

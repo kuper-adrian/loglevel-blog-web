@@ -12,31 +12,27 @@ router
 
   .post('/', (req, res) => {
     // check that required form data was passed
-    if (!req.body.username) {
-      res.render('login', { title: 'invalid', errorMessage: 'Invalid credentials' });
-      return;
-    }
-
-    if (!req.body.password) {
-      res.render('login', { title: 'invalid', errorMessage: 'Invalid credentials' });
+    if (!req.body.username || !req.body.password) {
+      res.render('login', { title: 'login', errorMessage: 'Invalid credentials' });
       return;
     }
 
     ApiClient.login(req.body.username, req.body.password)
-      .then((tokens) => {
+      .then((result) => {
         // TODO verify access token!
 
-        res.cookie('accessToken', tokens.accessToken, {
+        res.cookie('accessToken', result.data.accessToken, {
           httpOnly: true,
         });
-        res.cookie('refreshToken', tokens.refreshToken, {
+        res.cookie('refreshToken', result.data.refreshToken, {
           httpOnly: true,
         });
         res.status(200).redirect('/');
       })
 
       .catch((error) => {
-        res.render('login', { title: 'invalid', errorMessage: 'Invalid credentials' });
+        console.log(error);
+        res.render('login', { title: 'login', errorMessage: 'Invalid credentials' });
       });
   });
 
