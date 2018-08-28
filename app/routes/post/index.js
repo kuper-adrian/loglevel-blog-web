@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
   const page = !req.query.page ? 0 : Number(req.query.page);
   Api.getPostsByPage(page, req.cookies)
     .then((result) => {
-      res.render('index', { title: 'dev-null-blog', data: result.data });
+      res.render('index', { title: 'loglevel: blog', data: result.data });
     })
     .catch((error) => {
       // TODO proper error handling

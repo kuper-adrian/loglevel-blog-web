@@ -13,7 +13,7 @@ router
     // get tags from api
     Api.getTags(req.cookies)
       .then((result) => {
-        res.render('post/create', { title: 'create', data: { tags: result.data } });
+        res.render('post/create', { title: 'create - loglevel: blog', data: { tags: result.data } });
       })
 
       .catch((error) => {

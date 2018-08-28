@@ -21,11 +21,7 @@ router
         next(error);
       });
   }, (req, res) => {
-    res.render('index', { title: 'dev-null-blog', data: req.devNullPosts });
-  })
-
-  .post((req, res) => {
-    res.send('test');
+    res.render('index', { title: 'loglevel: blog', data: req.devNullPosts });
   });
 
 module.exports = router;

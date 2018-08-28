@@ -8,13 +8,13 @@ const ApiClient = loglevelApi.Client;
 router
   .get('/', (req, res) => {
     // TODO redirect if already logged in
-    res.render('login', { title: 'login' });
+    res.render('login', { title: 'login - loglevel: blog' });
   })
 
   .post('/', (req, res) => {
     // check that required form data was passed
     if (!req.body.username || !req.body.password) {
-      res.render('login', { title: 'login', errorMessage: 'Invalid credentials' });
+      res.render('login', { title: 'login - loglevel: blog', errorMessage: 'Invalid credentials' });
       return;
     }
 
@@ -33,7 +33,7 @@ router
 
       .catch((error) => {
         logger.error(error);
-        res.render('login', { title: 'login', errorMessage: 'Invalid credentials' });
+        res.render('login', { title: 'login - loglevel: blog', errorMessage: 'Invalid credentials' });
       });
   });
 
