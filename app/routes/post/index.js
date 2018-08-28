@@ -2,6 +2,7 @@ const express = require('express');
 const { Base64 } = require('js-base64');
 const asciidoctor = require('asciidoctor.js')();
 
+const logger = require('../../services/logger').getLogger();
 const loglevelApi = require('../../services/api');
 
 const router = express.Router();
@@ -19,7 +20,7 @@ router.get('/', (req, res, next) => {
     })
     .catch((error) => {
       // TODO proper error handling
-      console.log(error);
+      logger.error(error);
       next(error);
     });
 });
@@ -37,7 +38,7 @@ router.get('/:id', (req, res, next) => {
 
     .catch((error) => {
       // TODO proper error handling
-      console.log(error);
+      logger.error(error);
       next(error);
     });
 }, (req, res) => {

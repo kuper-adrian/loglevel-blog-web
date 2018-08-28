@@ -1,5 +1,6 @@
 const express = require('express');
 const loglevelApi = require('../services/api');
+const logger = require('../services/logger').getLogger();
 
 const router = express.Router();
 const ApiClient = loglevelApi.Client;
@@ -31,7 +32,7 @@ router
       })
 
       .catch((error) => {
-        console.log(error);
+        logger.error(error);
         res.render('login', { title: 'login', errorMessage: 'Invalid credentials' });
       });
   });

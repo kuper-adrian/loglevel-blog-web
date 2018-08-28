@@ -1,5 +1,6 @@
 const express = require('express');
 const loglevelApi = require('../services/api');
+const logger = require('../services/logger').getLogger();
 
 const router = express.Router();
 const ApiClient = loglevelApi.Client;
@@ -8,7 +9,7 @@ const ApiClient = loglevelApi.Client;
 router
   .get('/', (req, res, next) => {
     const page = !req.query.page ? 0 : Number(req.query.page);
-    console.log('test');
+
     ApiClient.getPostsByPage(page, req.cookies)
       .then((result) => {
         req.devNullPosts = result.data;
@@ -16,7 +17,7 @@ router
       })
       .catch((error) => {
         // TODO proper eror handling
-        console.log(error);
+        logger.error(error);
         next(error);
       });
   }, (req, res) => {

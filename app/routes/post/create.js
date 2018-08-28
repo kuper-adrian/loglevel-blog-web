@@ -1,6 +1,7 @@
 const express = require('express');
 const loglevelApi = require('../../services/api');
 const { Base64 } = require('js-base64');
+const logger = require('../../services/logger').getLogger();
 
 const router = express.Router();
 const Api = loglevelApi.Client;
@@ -16,7 +17,7 @@ router
       })
 
       .catch((error) => {
-        console.log(error);
+        logger.error(error);
         // res.status(500).send();
         next(error);
       });
@@ -46,7 +47,7 @@ router
         })
 
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           // res.status(500).send();
           next(error);
         });
@@ -65,7 +66,7 @@ router
       })
 
       .catch((error) => {
-        console.log(error);
+        logger.error(error);
         res.status(500).redirect('/');
       });
   });

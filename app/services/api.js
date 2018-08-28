@@ -3,13 +3,15 @@
  */
 
 const request = require('request-promise-native');
+const logger = require('./logger').getLogger();
+
 
 const PORT = 9002;
 const API_HOST_NAME = 'http://localhost';
 
 function getFullUri(subPath) {
   const uri = `${API_HOST_NAME}:${PORT}/v1${subPath}`;
-  console.log(`requesting resource at '${uri}'`);
+  logger.debug(`requesting resource at '${uri}'`);
   return uri;
 }
 
