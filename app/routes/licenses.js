@@ -6,3 +6,5 @@ router
   .get('/', (req, res) => {
     res.render('licenses', { title: 'licenses - loglevel: blog' });
   });
+
+module.exports = router;
