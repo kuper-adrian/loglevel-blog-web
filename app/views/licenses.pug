@@ -1,7 +1,79 @@
 extends layout
 
-mixin copyright-notice(productName, productLink, licenseName, licenseText, other)
+mixin copyright-notice(productName, productLink, licenseName, licenseLink, other)
+  details
+    summary(class="license-header") #{productName}
+    div(class="license-details")
+      div
+        span Website: 
+        a(class!=attributes.class href=productLink)= productLink
+      div 
+        span Licensed under: 
+        a(class!=attributes.class href=licenseLink)= licenseName
+      if other
+        div #{other}
 
 block content
-  h2 This blog is made possible thanks to the following awesome frameworks/projects:
-  
+  h2 This blog is made possible thanks to the following awesome frameworks and projects:
+  hr
+
+  +copyright-notice('asciidoctor.js', 'https://github.com/asciidoctor/asciidoctor.js', 'MIT', 'https://github.com/asciidoctor/asciidoctor.js/blob/master/LICENSE')
+
+  +copyright-notice('cookie-parser', 'https://github.com/expressjs/cookie-parser', 'MIT', 'https://github.com/expressjs/cookie-parser/blob/master/LICENSE')
+
+  +copyright-notice('debug', 'https://github.com/visionmedia/debug', 'MIT', 'https://github.com/visionmedia/debug/blob/master/LICENSE')
+
+  +copyright-notice('express', 'https://expressjs.com', 'MIT', 'https://github.com/expressjs/express/blob/master/LICENSE')
+
+  +copyright-notice('http-errors', 'https://github.com/jshttp/http-errors', 'MIT', 'https://github.com/jshttp/http-errors/blob/master/LICENSE')
+
+  +copyright-notice('js-base64', 'https://github.com/dankogai/js-base64', 'BSD-3-Clause', 'https://github.com/dankogai/js-base64/blob/master/LICENSE.md')
+
+  +copyright-notice('morgan', 'https://github.com/expressjs/morgan', 'MIT', 'https://github.com/expressjs/morgan/blob/master/LICENSE')
+
+  +copyright-notice('pug', 'https://pugjs.org/', 'MIT', 'https://github.com/pugjs/pug/blob/master/README.md')
+
+  +copyright-notice('request', 'https://github.com/request/request', 'Apache-2.0', 'https://github.com/request/request/blob/master/LICENSE', 'No changes were made to the source')
+
+  +copyright-notice('request-promise-native', 'https://github.com/request/request-promise-native', 'ISC', 'https://github.com/request/request-promise-native/blob/master/LICENSE')
+
+  +copyright-notice('winston', 'https://github.com/winstonjs/winston', 'MIT', 'https://github.com/winstonjs/winston/blob/master/LICENSE')
+
+  +copyright-notice('eslint', 'https://eslint.org/', 'MIT', 'https://github.com/eslint/eslint/blob/master/LICENSE')
+
+  +copyright-notice('eslint-config-airbnb-base', 'https://github.com/airbnb/javascript', 'MIT', 'https://github.com/airbnb/javascript/blob/master/LICENSE.md')
+
+  +copyright-notice('eslint-plugin-import', 'https://github.com/benmosher/eslint-plugin-import', 'MIT', 'https://github.com/benmosher/eslint-plugin-import/blob/master/LICENSE')
+
+  h2 Additionally, the following projects and frameworks were used to create the backend-api powering loglevel-blog:
+  hr
+
+  //"bcrypt": "^2.0.1",
+  +copyright-notice('bcrypt', 'https://github.com/kelektiv/node.bcrypt.js', 'MIT', 'https://github.com/kelektiv/node.bcrypt.js/blob/master/LICENSE')
+
+  //"body-parser": "^1.18.3",
+  +copyright-notice('body-parser', 'https://github.com/expressjs/body-parser', 'MIT', 'https://github.com/expressjs/body-parser/blob/master/LICENSE')
+
+  //"command-line-args": "^5.0.2",
+  +copyright-notice('command-line-args', 'https://github.com/75lb/command-line-args', 'MIT', 'https://github.com/75lb/command-line-args/blob/master/LICENSE')
+
+  //"helmet": "^3.12.1",
+  +copyright-notice('helmet', 'https://helmetjs.github.io/', 'MIT', 'https://github.com/helmetjs/helmet/blob/master/LICENSE')
+
+  //"jsonwebtoken": "^8.3.0",
+  +copyright-notice('jsonwebtoken', 'https://github.com/auth0/node-jsonwebtoken', 'MIT', 'https://github.com/auth0/node-jsonwebtoken/blob/master/LICENSE')
+
+  //"knex": "^0.14.6",
+  +copyright-notice('knex', 'https://knexjs.org/', 'MIT', 'https://github.com/tgriesser/knex/blob/master/LICENSE')
+
+  //"moment": "^2.22.2",
+  +copyright-notice('moment', 'https://momentjs.com/', 'MIT', 'https://github.com/moment/moment/blob/develop/LICENSE')
+
+  //"npm": "^6.3.0",
+  +copyright-notice('npm', 'https://docs.npmjs.com/', 'Artistic-2.0', 'https://github.com/npm/cli/blob/latest/LICENSE')
+
+  //"sqlite3": "^4.0.1",
+  +copyright-notice('sqlite3', 'https://github.com/mapbox/node-sqlite3', 'BSD 3-Clause', 'https://github.com/mapbox/node-sqlite3/blob/master/LICENSE')
+
+  //"uuid": "^3.3.2",
+  +copyright-notice('uuid', 'https://github.com/kelektiv/node-uuid#readme', 'MIT', 'https://github.com/kelektiv/node-uuid/blob/master/LICENSE.md')
