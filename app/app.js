@@ -12,6 +12,8 @@ const licensesRouter = require('./routes/licenses');
 
 const app = express();
 
+// edit to understand rebasing
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
