@@ -9,6 +9,7 @@ const postRouter = require('./routes/post/index');
 const loginRouter = require('./routes/login');
 const aboutRouter = require('./routes/about');
 const licensesRouter = require('./routes/licenses');
+const adminRouter = require('./routes/admin');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/post', postRouter);
 app.use('/login', loginRouter);
 app.use('/about', aboutRouter);
 app.use('/licenses', licensesRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
