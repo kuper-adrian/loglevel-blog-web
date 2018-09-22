@@ -38,7 +38,10 @@ router
           const viewModel = {
             title: 'create',
             data: {
-              errorMessage: 'Invalid input',
+              snackbarMessage: {
+                type: 'error',
+                text: 'Invalid input',
+              },
               tags: result.data,
             },
           };

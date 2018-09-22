@@ -27,5 +27,15 @@ html
       div(class='gi-footer')
         a(href="#") - back to top -
     
+    if snackbarMessage && snackbarMessage.text
+      if snackbarMessage.type !== undefined
+        div(id="snackbar", class= snackbarMessage.type)
+          span #{snackbarMessage.text}
+      else
+        div(id="snackbar", class="default")
+          span #{snackbarMessage.text}
+      
+    
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(src="../js/layout.js")
     block scripts

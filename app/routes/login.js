@@ -14,7 +14,7 @@ router
   .post('/', (req, res) => {
     // check that required form data was passed
     if (!req.body.username || !req.body.password) {
-      res.render('login', { title: 'login - loglevel: blog', errorMessage: 'Invalid credentials' });
+      res.render('login', { title: 'login - loglevel: blog', snackbarMessage: { type: 'error', text: 'Invalid credentials' } });
       return;
     }
 
@@ -32,8 +32,8 @@ router
       })
 
       .catch((error) => {
-        logger.error(error);
-        res.render('login', { title: 'login - loglevel: blog', errorMessage: 'Invalid credentials' });
+        logger.error(error.message);
+        res.render('login', { title: 'login - loglevel: blog', snackbarMessage: { type: 'error', text: 'Invalid credentials' } });
       });
   });
 
