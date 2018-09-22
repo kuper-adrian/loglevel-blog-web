@@ -97,6 +97,16 @@ class LogLevelBlogApiClient {
       },
     });
   }
+
+  static hasAccess(cookies = { accessToken: '', refreshToken: '' }) {
+    return request.get({
+      uri: getFullUri('/hasAccess'),
+      json: true,
+      headers: {
+        Authorization: `Bearer ${cookies.accessToken}`,
+      },
+    });
+  }
 }
 
 exports.Client = LogLevelBlogApiClient;
