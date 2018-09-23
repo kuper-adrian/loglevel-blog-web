@@ -21,7 +21,7 @@ router
 
     ApiClient.login(req.body.username, req.body.password)
       .then((result) => {
-        // TODO verify access token!
+        // TODO verify access token with public api certificate to verify its authenticity!
 
         res.cookie('accessToken', result.data.accessToken, {
           httpOnly: true,
