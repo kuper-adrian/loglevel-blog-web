@@ -1,6 +1,7 @@
 const express = require('express');
 const loglevelApi = require('../services/api');
 const logger = require('../services/logger').getLogger();
+const url = require('url');
 
 const router = express.Router();
 const ApiClient = loglevelApi.Client;
@@ -28,7 +29,14 @@ router
         res.cookie('refreshToken', result.data.refreshToken, {
           httpOnly: true,
         });
-        res.status(200).redirect('/');
+
+        res.status(200).redirect(url.format({
+          pathname: '/',
+          query: {
+            sbType: 'success',
+            sbText: 'Login successful!',
+          },
+        }));
       })
 
       .catch((error) => {
