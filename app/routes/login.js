@@ -30,6 +30,7 @@ router
           httpOnly: true,
         });
 
+        // redirect to index with success snackbar message
         res.status(200).redirect(url.format({
           pathname: '/',
           query: {
