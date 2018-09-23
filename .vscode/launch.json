@@ -1,0 +1,41 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "type": "node",
+          "request": "launch",
+          "name": "Launch via NPM",
+          "runtimeExecutable": "npm",
+          "args": [
+              "run",
+              "debug"
+          ],
+          "console": "integratedTerminal",
+          "internalConsoleOptions": "neverOpen",
+          "port": 9229
+      },
+      {
+          "type": "node",
+          "request": "attach",
+          "name": "Node: Nodemon",
+          "processId": "${command:PickProcess}",
+          "restart": true,
+          "protocol": "inspector"
+      },
+      {
+          "type": "node",
+          "request": "launch",
+          "name": "Mocha All",
+          "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+          "args": [
+              "--timeout",
+              "999999",
+              "--colors",
+              "${workspaceFolder}/test",
+              "--recursive"
+          ],
+          "console": "integratedTerminal",
+          "internalConsoleOptions": "neverOpen"
+      }
+  ]
+}
