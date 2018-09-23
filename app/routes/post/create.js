@@ -1,7 +1,8 @@
 const express = require('express');
-const loglevelApi = require('../../services/api');
 const { Base64 } = require('js-base64');
+const loglevelApi = require('../../services/api');
 const logger = require('../../services/logger').getLogger();
+const checkAccess = require('../../middleware/checkAccess');
 
 const router = express.Router();
 const Api = loglevelApi.Client;
@@ -9,7 +10,7 @@ const Api = loglevelApi.Client;
 
 /* GET page to view specific blog post. */
 router
-  .get('/', (req, res, next) => {
+  .get('/', checkAccess, (req, res, next) => {
     // get tags from api
     Api.getTags(req.cookies)
       .then((result) => {
@@ -23,7 +24,7 @@ router
       });
   })
 
-  .post('/', (req, res, next) => {
+  .post('/', checkAccess, (req, res, next) => {
     const { body } = req;
 
     if (
