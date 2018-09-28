@@ -3,6 +3,7 @@
  */
 
 const request = require('request-promise-native');
+const { Base64 } = require('js-base64');
 const logger = require('./logger').getLogger();
 
 
@@ -15,12 +16,20 @@ function getFullUri(subPath) {
   return uri;
 }
 
+function getNameFromTokenPayload(accessToken) {
+  const payload = JSON.parse(Base64.decode(accessToken.split('.')[1]));
+  return payload.name;
+}
+
+/**
+ * Class to interact with backend REST api.
+ */
 class LogLevelBlogApiClient {
   /**
    * Returns blog post by the given id from api.
    * @param {Number} id Id of the request blog post
    */
-  static getPostById(id, cookies = { accessToken: '', refreshToken: '' }) {
+  static getPostById(req, res, id) {
     if (!id) {
       return Promise.reject(new Error('Invalid "id" parameter passed'));
     }
@@ -29,9 +38,15 @@ class LogLevelBlogApiClient {
       uri: getFullUri(`/post/${id}`),
       json: true,
       headers: {
-        Authorization: `Bearer ${cookies.accessToken}`,
+        Authorization: `Bearer ${req.cookies.accessToken}`,
       },
-    });
+    })
+      .catch((error) => {
+        if (error.statusCode === 401) {
+          return this.refresh(req, res).then(() => this.getPostById(req, res, id));
+        }
+        return Promise.reject(error);
+      });
   }
 
   /**
@@ -39,7 +54,7 @@ class LogLevelBlogApiClient {
    * @param {Number} page Zero-based page number
    * @param {Object} cookies Object, that contains access and refresh tokens
    */
-  static getPostsByPage(page, cookies = { accessToken: '', refreshToken: '' }) {
+  static getPostsByPage(req, res, page) {
     if (page === undefined || page === null || page < 0) {
       return Promise.reject(new Error('Invalid "page" parameter passed'));
     }
@@ -48,19 +63,31 @@ class LogLevelBlogApiClient {
       uri: getFullUri(`/post?page=${page}`),
       json: true,
       headers: {
-        Authorization: `Bearer ${cookies.accessToken}`,
+        Authorization: `Bearer ${req.cookies.accessToken}`,
       },
-    });
+    })
+      .catch((error) => {
+        if (error.statusCode === 401) {
+          return this.refresh(req, res).then(() => this.getPostsByPage(req, res, page));
+        }
+        return Promise.reject(error);
+      });
   }
 
-  static getTags(cookies = { accessToken: '', refreshToken: '' }) {
+  static getTags(req, res) {
     return request.get({
       uri: getFullUri('/tag'),
       json: true,
       header: {
-        Authorization: `Bearer ${cookies.accessToken}`,
+        Authorization: `Bearer ${req.cookies.accessToken}`,
       },
-    });
+    })
+      .catch((error) => {
+        if (error.statusCode === 401) {
+          return this.refresh(req, res).then(() => this.getTags(req, res));
+        }
+        return Promise.reject(error);
+      });
   }
 
   /**
@@ -68,7 +95,7 @@ class LogLevelBlogApiClient {
    * @param {String} username Username of the user
    * @param {String} password Password of the user
    */
-  static login(username, password) {
+  static login(res, username, password) {
     if (!username) {
       return Promise.reject(new Error('no username'));
     }
@@ -84,28 +111,78 @@ class LogLevelBlogApiClient {
         password,
       },
       json: true,
-    });
+    })
+      .then((result) => {
+        res.cookie('accessToken', result.data.accessToken, {
+          httpOnly: true,
+        });
+        res.cookie('refreshToken', result.data.refreshToken, {
+          httpOnly: true,
+        });
+      });
   }
 
-  static createPost(blogPost, cookies = { accessToken: '', refreshToken: '' }) {
+  static refresh(req, res) {
+    if (!req) {
+      return Promise.reject(new Error('no req parameter'));
+    }
+    if (!res) {
+      return Promise.reject(new Error('no res parameter'));
+    }
+
+    return request.post({
+      method: 'POST',
+      uri: getFullUri('/refresh'),
+      body: {
+        name: getNameFromTokenPayload(req.cookies.accessToken),
+        refreshToken: req.cookies.refreshToken,
+      },
+      json: true,
+    })
+      .then((result) => {
+        // TODO verify access token with public api certificate to verify its authenticity!
+
+        res.cookie('accessToken', result.data.accessToken, {
+          httpOnly: true,
+        });
+        res.cookie('refreshToken', result.data.refreshToken, {
+          httpOnly: true,
+        });
+      });
+  }
+
+  static createPost(req, res, blogPost) {
     return request.post({
       uri: getFullUri('/post'),
       body: blogPost,
       json: true,
       headers: {
-        Authorization: `Bearer ${cookies.accessToken}`,
+        Authorization: `Bearer ${req.cookies.accessToken}`,
       },
-    });
+    })
+
+      .catch((error) => {
+        if (error.statusCode === 401) {
+          return this.refresh(req, res).then(() => this.createPost(req, res, blogPost));
+        }
+        return Promise.reject(error);
+      });
   }
 
-  static hasAccess(cookies = { accessToken: '', refreshToken: '' }) {
+  static hasAccess(req, res) {
     return request.get({
       uri: getFullUri('/hasAccess'),
       json: true,
       headers: {
-        Authorization: `Bearer ${cookies.accessToken}`,
+        Authorization: `Bearer ${req.cookies.accessToken}`,
       },
-    });
+    })
+      .catch((error) => {
+        if (error.statusCode === 401) {
+          return this.refresh(req, res).then(() => this.hasAccess(req, res));
+        }
+        return Promise.reject(error);
+      });
   }
 }
 

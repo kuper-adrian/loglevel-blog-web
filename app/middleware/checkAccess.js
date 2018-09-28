@@ -4,7 +4,7 @@ const url = require('url');
 const ApiClient = loglevelApi.Client;
 
 module.exports = (req, res, next) => {
-  ApiClient.hasAccess(req.cookies)
+  ApiClient.hasAccess(req, res)
     .then(() => {
       next();
     })

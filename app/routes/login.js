@@ -19,16 +19,9 @@ router
       return;
     }
 
-    ApiClient.login(req.body.username, req.body.password)
-      .then((result) => {
-        // TODO verify access token with public api certificate to verify its authenticity!
-
-        res.cookie('accessToken', result.data.accessToken, {
-          httpOnly: true,
-        });
-        res.cookie('refreshToken', result.data.refreshToken, {
-          httpOnly: true,
-        });
+    ApiClient.login(res, req.body.username, req.body.password)
+      .then(() => {
+        console.log('test');
 
         // redirect to index with success snackbar message
         res.status(200).redirect(url.format({

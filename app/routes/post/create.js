@@ -12,7 +12,7 @@ const Api = loglevelApi.Client;
 router
   .get('/', checkAccess, (req, res, next) => {
     // get tags from api
-    Api.getTags(req.cookies)
+    Api.getTags(req, res)
       .then((result) => {
         res.render('post/create', { title: 'create - loglevel: blog', data: { tags: result.data } });
       })
@@ -34,7 +34,7 @@ router
       !body.text ||
       !body.tags
     ) {
-      Api.getTags(req.cookies)
+      Api.getTags(req, res)
         .then((result) => {
           const viewModel = {
             title: 'create',
@@ -63,7 +63,7 @@ router
     blogPost.tags = JSON.parse(blogPost.tags);
     blogPost.text = Base64.encode(blogPost.text);
 
-    Api.createPost(blogPost, req.cookies)
+    Api.createPost(req, res, blogPost)
       .then((result) => {
         const { blogPostId } = result.data;
         res.status(200).redirect(`/post/${blogPostId}`);

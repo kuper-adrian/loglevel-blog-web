@@ -14,7 +14,7 @@ router.use('/create', createRouter);
 
 router.get('/', (req, res, next) => {
   const page = !req.query.page ? 0 : Number(req.query.page);
-  Api.getPostsByPage(page, req.cookies)
+  Api.getPostsByPage(req, res, page)
     .then((result) => {
       res.render('index', { title: 'loglevel: blog', data: result.data });
     })
@@ -27,7 +27,7 @@ router.get('/', (req, res, next) => {
 
 /* GET page to view specific blog post. */
 router.get('/:id', (req, res, next) => {
-  Api.getPostById(req.params.id)
+  Api.getPostById(req, res, req.params.id)
     .then((result) => {
       const { data: displayablePost } = result;
       const asciidoc = Base64.decode(displayablePost.text);

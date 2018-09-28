@@ -10,7 +10,7 @@ router
   .get('/', (req, res, next) => {
     const page = !req.query.page ? 0 : Number(req.query.page);
 
-    ApiClient.getPostsByPage(page, req.cookies)
+    ApiClient.getPostsByPage(req, res, page)
       .then((result) => {
         req.devNullPosts = result.data;
         next();
