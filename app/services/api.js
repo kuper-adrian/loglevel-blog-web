@@ -43,7 +43,9 @@ class LogLevelBlogApiClient {
     })
       .catch((error) => {
         if (error.statusCode === 401) {
-          return this.refresh(req, res).then(() => this.getPostById(req, res, id));
+          return LogLevelBlogApiClient.refresh(req, res)
+            .then(() => LogLevelBlogApiClient.getPostById(req, res, id))
+            .catch(refreshError => Promise.reject(refreshError));
         }
         return Promise.reject(error);
       });
@@ -68,7 +70,9 @@ class LogLevelBlogApiClient {
     })
       .catch((error) => {
         if (error.statusCode === 401) {
-          return this.refresh(req, res).then(() => this.getPostsByPage(req, res, page));
+          return LogLevelBlogApiClient.refresh(req, res)
+            .then(() => LogLevelBlogApiClient.getPostsByPage(req, res, page))
+            .catch(refreshError => Promise.reject(refreshError));
         }
         return Promise.reject(error);
       });
@@ -84,7 +88,9 @@ class LogLevelBlogApiClient {
     })
       .catch((error) => {
         if (error.statusCode === 401) {
-          return this.refresh(req, res).then(() => this.getTags(req, res));
+          return LogLevelBlogApiClient.refresh(req, res)
+            .then(() => LogLevelBlogApiClient.getTags(req, res))
+            .catch(refreshError => Promise.reject(refreshError));
         }
         return Promise.reject(error);
       });
@@ -134,13 +140,16 @@ class LogLevelBlogApiClient {
       method: 'POST',
       uri: getFullUri('/refresh'),
       body: {
-        name: getNameFromTokenPayload(req.cookies.accessToken),
+        username: getNameFromTokenPayload(req.cookies.accessToken),
         refreshToken: req.cookies.refreshToken,
       },
       json: true,
     })
       .then((result) => {
         // TODO verify access token with public api certificate to verify its authenticity!
+
+        req.cookies.accessToken = result.data.accessToken;
+        req.cookies.refreshToken = result.data.refreshToken;
 
         res.cookie('accessToken', result.data.accessToken, {
           httpOnly: true,
@@ -163,7 +172,9 @@ class LogLevelBlogApiClient {
 
       .catch((error) => {
         if (error.statusCode === 401) {
-          return this.refresh(req, res).then(() => this.createPost(req, res, blogPost));
+          return LogLevelBlogApiClient.refresh(req, res)
+            .then(() => LogLevelBlogApiClient.createPost(req, res, blogPost))
+            .catch(refreshError => Promise.reject(refreshError));
         }
         return Promise.reject(error);
       });
@@ -179,7 +190,9 @@ class LogLevelBlogApiClient {
     })
       .catch((error) => {
         if (error.statusCode === 401) {
-          return this.refresh(req, res).then(() => this.hasAccess(req, res));
+          return LogLevelBlogApiClient.refresh(req, res)
+            .then(() => LogLevelBlogApiClient.hasAccess(req, res))
+            .catch(refreshError => Promise.reject(refreshError));
         }
         return Promise.reject(error);
       });
