@@ -8,6 +8,3 @@ Backend api can be found [here](https://github.com/kuper-adrian/loglevel-blog-ap
 - api call caching (esp. for getting blog posts contents)
 - Ability to create tags through web page (e.g. on post/create page)
 - api calls as middleware
-
-## in progress
-- automatic api token refresh
