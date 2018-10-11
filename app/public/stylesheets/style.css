@@ -25,6 +25,10 @@ a {
   text-align: center;
 }
 
+.gi-footer > a {
+  margin: 0 5px;
+}
+
 .grid-container {
   margin: 0 auto;
   max-width: 1000px;
