@@ -16,9 +16,6 @@ block content
           div(class="post-header") 
             a(class="title", href= item.actions.read.href) #{item.title}
 
-            if item.actions.edit || item.actions.delete
-              a(href="#", class="actions-access") ...
-
             br
             span(class="grey") written #{item.publishedAt} by #{item.author.name}
           hr

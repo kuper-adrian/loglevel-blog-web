@@ -136,6 +136,10 @@ class LogLevelBlogApiClient {
       return Promise.reject(new Error('no res parameter'));
     }
 
+    if (!req.cookies.accessToken || req.cookies.refreshToken) {
+      return Promise.reject(new Error('Can not refresh non-existent refresh tokens'));
+    }
+
     return request.post({
       method: 'POST',
       uri: getFullUri('/refresh'),
@@ -189,7 +193,7 @@ class LogLevelBlogApiClient {
       },
     })
       .catch((error) => {
-        if (error.statusCode === 401) {
+        if (error.statusCode === 401 && req.cookies.accessToken && req.cookies.refreshToken) {
           return LogLevelBlogApiClient.refresh(req, res)
             .then(() => LogLevelBlogApiClient.hasAccess(req, res))
             .catch(refreshError => Promise.reject(refreshError));
